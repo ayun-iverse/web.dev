@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full-Stack Roadmap Study Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --gray-color: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .controls {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        select, input {
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            background-color: white;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 2;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+
+        .search-box input {
+            padding-left: 45px;
+            width: 100%;
+        }
+
+        .progress-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .roadmap-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .roadmap-header {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .roadmap-body {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .phase {
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .phase:last-child {
+            border-bottom: none;
+        }
+
+        .phase-header {
+            background-color: #f1f3ff;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .phase-header:hover {
+            background-color: #e9edff;
+        }
+
+        .phase-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .phase-badge {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .phase-stats {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .phase-progress {
+            width: 150px;
+            height: 10px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .phase-progress-fill {
+            height: 100%;
+            background-color: var(--success-color);
+            transition: var(--transition);
+        }
+
+        .phase-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .phase-content.expanded {
+            padding: 1.5rem;
+            max-height: 2000px;
+        }
+
+        .week {
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .week:last-child {
+            margin-bottom: 0;
+        }
+
+        .week-header {
+            background-color: var(--light-color);
+            padding: 1rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .items-list {
+            padding: 0;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+            transition: var(--transition);
+        }
+
+        .item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-checkbox {
+            margin-right: 1rem;
+            min-width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+
+        .item-type {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .type-topic {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .type-project {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .type-capstone {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .item-completed .item-title {
+            text-decoration: line-through;
+            color: var(--gray-color);
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--light-gray);
+            color: var(--secondary-color);
+        }
+
+        .completion-chart {
+            height: 200px;
+            margin-bottom: 2rem;
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .notes-section {
+            margin-top: 2rem;
+        }
+
+        .notes-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--gray-color);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--light-gray);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .progress-buttons {
+                justify-content: center;
+            }
+            
+            .phase-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .phase-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .item-actions {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-road"></i> Full-Stack Roadmap Tracker</h1>
+            <p class="subtitle">Track your progress through this comprehensive full-stack development syllabus. Mark items as completed, filter by phase, and visualize your journey.</p>
+        </header>
+
+        <div class="dashboard">
+            <div class="main-content">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-items">197</div>
+                        <div class="stat-label">Total Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="completed-items">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="completion-rate">0%</div>
+                        <div class="stat-label">Completion Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="remaining-weeks">30</div>
+                        <div class="stat-label">Remaining Weeks</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label for="phase-filter">Filter by Phase</label>
+                            <select id="phase-filter">
+                                <option value="all">All Phases</option>
+                                <option value="Phase 1">Phase 1: JavaScript Fundamentals</option>
+                                <option value="Phase 2">Phase 2: Git & Version Control</option>
+                                <option value="Phase 3">Phase 3: React.js</option>
+                                <option value="Phase 4">Phase 4: Advanced React & State Management</option>
+                                <option value="Phase 5">Phase 5: Backend Development</option>
+                                <option value="Phase 6">Phase 6: Full-Stack Integration</option>
+                                <option value="Phase 7">Phase 7: Advanced Topics & Deployment</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="type-filter">Filter by Type</label>
+                            <select id="type-filter">
+                                <option value="all">All Types</option>
+                                <option value="Topic">Topic</option>
+                                <option value="Project">Project</option>
+                                <option value="Capstone">Capstone</option>
+                            </select>
+                        </div>
+                        <div class="filter-group search-box">
+                            <label for="search">Search Items</label>
+                            <div style="position: relative;">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search" placeholder="Search for topics, projects...">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-buttons">
+                        <button class="btn btn-primary" id="mark-all-complete">
+                            <i class="fas fa-check-double"></i> Mark All as Complete
+                        </button>
+                        <button class="btn btn-outline" id="mark-all-incomplete">
+                            <i class="fas fa-undo"></i> Mark All as Incomplete
+                        </button>
+                        <button class="btn btn-success" id="export-progress">
+                            <i class="fas fa-download"></i> Export Progress
+                        </button>
+                    </div>
+                </div>
+
+                <div class="roadmap-container">
+                    <div class="roadmap-header">
+                        <h2>Full-Stack Roadmap</h2>
+                        <div class="roadmap-stats">
+                            <span id="visible-items">197</span> items shown
+                        </div>
+                    </div>
+                    <div class="roadmap-body" id="roadmap-body">
+                        <!-- Phases will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h3 class="sidebar-title">Progress Overview</h3>
+                
+                <div class="completion-chart" id="completion-chart">
+                    <canvas id="progressChart"></canvas>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #2ecc71;"></div>
+                        <span>Completed</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #f39c12;"></div>
+                        <span>In Progress</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #e74c3c;"></div>
+                        <span>Not Started</span>
+                    </div>
+                </div>
+                
+                <div class="notes-section">
+                    <h3 class="notes-title">Study Notes</h3>
+                    <textarea id="study-notes" placeholder="Add your study notes here..."></textarea>
+                    <button class="btn btn-primary btn-small" id="save-notes" style="margin-top: 1rem;">
+                        <i class="fas fa-save"></i> Save Notes
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Full-Stack Roadmap Study Tracker • 197 learning items across 7 phases • Progress is saved locally in your browser</p>
+            <p>Made with <i class="fas fa-heart" style="color: #e74c3c;"></i> for aspiring full-stack developers</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Complete roadmap data with ALL phases and topics
+        const roadmapData = [
+            // Phase 1: JavaScript Fundamentals (Weeks 1-4)
+            { phase: "Phase 1", week: "Week 1-2", category: "JavaScript Fundamentals", item: "1.1 Variables: var, let, const", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "JavaScript Fundamentals", item: "1.2 Data Types & Type Coercion", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "JavaScript Fundamentals", item: "1.3 Operators (Arithmetic, Logical, Comparison)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "JavaScript Fundamentals", item: "PROJECT: Simple Calculator", type: "Project" },
+            { phase: "Phase 1", week: "Week 1-2", category: "JavaScript Fundamentals", item: "PROJECT: Temperature Converter", type: "Project" },
+            { phase: "Phase 1", week: "Week 1-2", category: "JavaScript Fundamentals", item: "PROJECT: Password Strength Checker", type: "Project" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Control Flow & Logic", item: "2.1 Conditional Statements (if, else, switch)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Control Flow & Logic", item: "2.2 Loops (for, while, for...of, for...in)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Control Flow & Logic", item: "2.3 Loop Control (break, continue)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Control Flow & Logic", item: "PROJECT: FizzBuzz Program", type: "Project" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Control Flow & Logic", item: "PROJECT: Number Guessing Game", type: "Project" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Control Flow & Logic", item: "PROJECT: Prime Number Checker", type: "Project" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Functions Foundation", item: "3.1 Function Declaration vs Expression", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Functions Foundation", item: "3.2 Arrow Functions", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Functions Foundation", item: "3.3 Parameters, Arguments & Return Values", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Functions Foundation", item: "3.4 Scope and Closure (CRITICAL)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Functions Foundation", item: "PROJECT: Grading Function", type: "Project" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Functions Foundation", item: "PROJECT: Mortgage Calculator", type: "Project" },
+            { phase: "Phase 1", week: "Week 1-2", category: "Functions Foundation", item: "PROJECT: Closure Practice (Counter)", type: "Project" },
+            { phase: "Phase 1", week: "Week 2", category: "Higher-Order Functions", item: "4.1 Functions as Parameters & Return Values", type: "Topic" },
+            { phase: "Phase 1", week: "Week 2", category: "Higher-Order Functions", item: "4.2 Array Methods: map(), filter(), reduce()", type: "Topic" },
+            { phase: "Phase 1", week: "Week 2", category: "Higher-Order Functions", item: "4.3 Callbacks and Callback Hell", type: "Topic" },
+            { phase: "Phase 1", week: "Week 2", category: "Higher-Order Functions", item: "PROJECT: Filter Students by Grade", type: "Project" },
+            { phase: "Phase 1", week: "Week 2", category: "Higher-Order Functions", item: "PROJECT: Transform Data with map()", type: "Project" },
+            { phase: "Phase 1", week: "Week 2", category: "Higher-Order Functions", item: "PROJECT: Aggregate Data with reduce()", type: "Project" },
+            { phase: "Phase 1", week: "Week 2", category: "Objects & Arrays Deep Dive", item: "5.1 Object Literals and Properties", type: "Topic" },
+            { phase: "Phase 1", week: "Week 2", category: "Objects & Arrays Deep Dive", item: "5.2 Array Methods (push, pop, slice, splice, etc.)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 2", category: "Objects & Arrays Deep Dive", item: "5.3 Destructuring & Spread Operator", type: "Topic" },
+            { phase: "Phase 1", week: "Week 2", category: "Objects & Arrays Deep Dive", item: "5.4 Object Methods (keys, values, entries)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 2", category: "Objects & Arrays Deep Dive", item: "PROJECT: Student Database (Array of Objects)", type: "Project" },
+            { phase: "Phase 1", week: "Week 2", category: "Objects & Arrays Deep Dive", item: "PROJECT: Filter & Calculate Class Statistics", type: "Project" },
+            { phase: "Phase 1", week: "Week 3", category: "Asynchronous Programming", item: "6.1 Synchronous vs Asynchronous Code", type: "Topic" },
+            { phase: "Phase 1", week: "Week 3", category: "Asynchronous Programming", item: "6.2 Event Loop Understanding (CRITICAL)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 3", category: "Asynchronous Programming", item: "6.3 Promises (.then, .catch, .finally)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 3", category: "Asynchronous Programming", item: "6.4 Promise Methods (all, race, allSettled)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 3", category: "Asynchronous Programming", item: "PROJECT: Simulate Async with setTimeout", type: "Project" },
+            { phase: "Phase 1", week: "Week 3", category: "Asynchronous Programming", item: "PROJECT: Chain Multiple Promises", type: "Project" },
+            { phase: "Phase 1", week: "Week 3", category: "Asynchronous Programming", item: "PROJECT: Promise Race Implementation", type: "Project" },
+            { phase: "Phase 1", week: "Week 3", category: "Modern Async/Await", item: "7.1 Async Functions & Await Keyword", type: "Topic" },
+            { phase: "Phase 1", week: "Week 3", category: "Modern Async/Await", item: "7.2 Error Handling (try/catch/finally)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 3", category: "Modern Async/Await", item: "7.3 Async/Await with Loops", type: "Topic" },
+            { phase: "Phase 1", week: "Week 3", category: "Modern Async/Await", item: "PROJECT: Convert Promises to Async/Await", type: "Project" },
+            { phase: "Phase 1", week: "Week 3", category: "Modern Async/Await", item: "PROJECT: Sequential API Fetches", type: "Project" },
+            { phase: "Phase 1", week: "Week 3", category: "Modern Async/Await", item: "PROJECT: Retry Mechanism for Failed Ops", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "DOM Manipulation", item: "8.1 Selecting Elements (querySelector, etc.)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "DOM Manipulation", item: "8.2 Modifying Elements (textContent, innerHTML)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "DOM Manipulation", item: "8.3 Event Listeners & Event Objects", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "DOM Manipulation", item: "8.4 Event Bubbling & Delegation", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "DOM Manipulation", item: "PROJECT: Todo List App (Add/Delete/Complete)", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "DOM Manipulation", item: "PROJECT: Interactive Form with Validation", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "DOM Manipulation", item: "PROJECT: Photo Gallery with Navigation", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "Fetch API & HTTP", item: "9.1 Fetch Syntax & HTTP Methods", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "Fetch API & HTTP", item: "9.2 Request Headers and Body", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "Fetch API & HTTP", item: "9.3 Response Handling & Error Handling", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "Fetch API & HTTP", item: "9.4 JSON Methods (stringify, parse)", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "Fetch API & HTTP", item: "PROJECT: Weather App (OpenWeatherMap API)", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "Fetch API & HTTP", item: "PROJECT: GitHub User Search", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "Fetch API & HTTP", item: "PROJECT: Currency Converter", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "Browser APIs", item: "10.1 LocalStorage vs SessionStorage", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "Browser APIs", item: "10.2 Storing & Retrieving Data", type: "Topic" },
+            { phase: "Phase 1", week: "Week 4", category: "Browser APIs", item: "PROJECT: Note-taking App with LocalStorage", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "Browser APIs", item: "PROJECT: Dark Mode Toggle (Persisted)", type: "Project" },
+            { phase: "Phase 1", week: "Week 4", category: "CAPSTONE", item: "🎯 CAPSTONE: Complete Todo App with API Integration", type: "Capstone" },
+
+            // Phase 2: Git Fundamentals (Weeks 5-6)
+            { phase: "Phase 2", week: "Week 5", category: "Git Fundamentals", item: "1.1 Git Installation & Setup", type: "Topic" },
+            { phase: "Phase 2", week: "Week 5", category: "Git Fundamentals", item: "1.2 git init, add, commit, status, log", type: "Topic" },
+            { phase: "Phase 2", week: "Week 5", category: "Git Fundamentals", item: "1.3 Understanding Staging Area", type: "Topic" },
+            { phase: "Phase 2", week: "Week 5", category: "Git Fundamentals", item: "1.4 Writing Good Commit Messages", type: "Topic" },
+            { phase: "Phase 2", week: "Week 5", category: "Remote Repositories", item: "2.1 git clone, remote, push, pull", type: "Topic" },
+            { phase: "Phase 2", week: "Week 5", category: "Remote Repositories", item: "2.2 git fetch vs git pull", type: "Topic" },
+            { phase: "Phase 2", week: "Week 5", category: "Remote Repositories", item: "2.3 SSH Keys Setup", type: "Topic" },
+            { phase: "Phase 2", week: "Week 5", category: "Remote Repositories", item: "PROJECT: Push Phase 1 Projects to GitHub", type: "Project" },
+            { phase: "Phase 2", week: "Week 6", category: "Branching Strategy", item: "3.1 Creating & Switching Branches", type: "Topic" },
+            { phase: "Phase 2", week: "Week 6", category: "Branching Strategy", item: "3.2 Merging & Merge Conflicts", type: "Topic" },
+            { phase: "Phase 2", week: "Week 6", category: "Branching Strategy", item: "3.3 git rebase Basics", type: "Topic" },
+            { phase: "Phase 2", week: "Week 6", category: "Branching Strategy", item: "3.4 Branch Naming Conventions", type: "Topic" },
+            { phase: "Phase 2", week: "Week 6", category: "Branching Strategy", item: "PROJECT: Feature Branch Workflow Practice", type: "Project" },
+            { phase: "Phase 2", week: "Week 6", category: "Git Workflows", item: "4.1 Feature Branch Workflow", type: "Topic" },
+            { phase: "Phase 2", week: "Week 6", category: "Git Workflows", item: "4.2 Pull Requests & Code Review", type: "Topic" },
+            { phase: "Phase 2", week: "Week 6", category: "Git Workflows", item: "4.3 Forking Workflow (Open Source)", type: "Topic" },
+            { phase: "Phase 2", week: "Week 6", category: "CAPSTONE", item: "🎯 CAPSTONE: Setup Todo App with Proper Git Workflow", type: "Capstone" },
+
+            // Phase 3: React.js (Weeks 7-14)
+            { phase: "Phase 3", week: "Week 7", category: "React Setup", item: "1.1 Create React App vs Vite", type: "Topic" },
+            { phase: "Phase 3", week: "Week 7", category: "React Setup", item: "1.2 Project Structure & Dev Server", type: "Topic" },
+            { phase: "Phase 3", week: "Week 7", category: "React Setup", item: "1.3 npm/yarn Basics", type: "Topic" },
+            { phase: "Phase 3", week: "Week 7", category: "React Setup", item: "PROJECT: First React App with Vite", type: "Project" },
+            { phase: "Phase 3", week: "Week 7", category: "JSX Fundamentals", item: "2.1 JSX Syntax & Expressions", type: "Topic" },
+            { phase: "Phase 3", week: "Week 7", category: "JSX Fundamentals", item: "2.2 Conditional Rendering (ternary, &&)", type: "Topic" },
+            { phase: "Phase 3", week: "Week 7", category: "JSX Fundamentals", item: "2.3 Lists and Keys", type: "Topic" },
+            { phase: "Phase 3", week: "Week 7", category: "JSX Fundamentals", item: "2.4 Styling (className, inline styles)", type: "Topic" },
+            { phase: "Phase 3", week: "Week 7", category: "JSX Fundamentals", item: "PROJECT: Welcome Component", type: "Project" },
+            { phase: "Phase 3", week: "Week 7", category: "JSX Fundamentals", item: "PROJECT: Display List with Keys", type: "Project" },
+            { phase: "Phase 3", week: "Week 8", category: "Components", item: "3.1 Functional Components Structure", type: "Topic" },
+            { phase: "Phase 3", week: "Week 8", category: "Components", item: "3.2 Component Composition", type: "Topic" },
+            { phase: "Phase 3", week: "Week 8", category: "Components", item: "3.3 When to Split Components", type: "Topic" },
+            { phase: "Phase 3", week: "Week 8", category: "Components", item: "PROJECT: Reusable Button, Card, Header", type: "Project" },
+            { phase: "Phase 3", week: "Week 8", category: "Components", item: "PROJECT: Landing Page Component Tree", type: "Project" },
+            { phase: "Phase 3", week: "Week 8", category: "Props", item: "4.1 Passing & Destructuring Props", type: "Topic" },
+            { phase: "Phase 3", week: "Week 8", category: "Props", item: "4.2 Props are Read-Only", type: "Topic" },
+            { phase: "Phase 3", week: "Week 8", category: "Props", item: "4.3 PropTypes & Default Props", type: "Topic" },
+            { phase: "Phase 3", week: "Week 8", category: "Props", item: "4.4 Children Prop Pattern", type: "Topic" },
+            { phase: "Phase 3", week: "Week 8", category: "Props", item: "PROJECT: Reusable Button Component", type: "Project" },
+            { phase: "Phase 3", week: "Week 8", category: "Props", item: "PROJECT: Card Component with Children", type: "Project" },
+            { phase: "Phase 3", week: "Week 8", category: "Props", item: "PROJECT: Product List with Reusable Items", type: "Project" },
+            { phase: "Phase 3", week: "Week 9", category: "State Management", item: "5.1 Understanding State", type: "Topic" },
+            { phase: "Phase 3", week: "Week 9", category: "State Management", item: "5.2 useState Hook Syntax", type: "Topic" },
+            { phase: "Phase 3", week: "Week 9", category: "State Management", item: "5.3 State with Objects & Arrays", type: "Topic" },
+            { phase: "Phase 3", week: "Week 9", category: "State Management", item: "5.4 Immutability in State Updates", type: "Topic" },
+            { phase: "Phase 3", week: "Week 9", category: "State Management", item: "PROJECT: Counter Component", type: "Project" },
+            { phase: "Phase 3", week: "Week 9", category: "State Management", item: "PROJECT: Light/Dark Mode Toggle", type: "Project" },
+            { phase: "Phase 3", week: "Week 9", category: "State Management", item: "PROJECT: Multi-input Form", type: "Project" },
+            { phase: "Phase 3", week: "Week 9", category: "Effects", item: "6.1 Understanding Side Effects", type: "Topic" },
+            { phase: "Phase 3", week: "Week 9", category: "Effects", item: "6.2 useEffect Syntax & Dependency Arrays", type: "Topic" },
+            { phase: "Phase 3", week: "Week 9", category: "Effects", item: "6.3 Cleanup Functions", type: "Topic" },
+            { phase: "Phase 3", week: "Week 9", category: "Effects", item: "6.4 Data Fetching with useEffect", type: "Topic" },
+            { phase: "Phase 3", week: "Week 9", category: "Effects", item: "PROJECT: Fetch Data on Mount", type: "Project" },
+            { phase: "Phase 3", week: "Week 9", category: "Effects", item: "PROJECT: Timer/Interval Component", type: "Project" },
+            { phase: "Phase 3", week: "Week 9", category: "Effects", item: "PROJECT: Search with API Calls", type: "Project" },
+            { phase: "Phase 3", week: "Week 10", category: "Context API", item: "7.1 Creating Context & Provider", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "Context API", item: "7.2 useContext Hook", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "Context API", item: "7.3 When NOT to Use Context", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "Context API", item: "PROJECT: Theme Context (Dark/Light)", type: "Project" },
+            { phase: "Phase 3", week: "Week 10", category: "Context API", item: "PROJECT: User Authentication Context", type: "Project" },
+            { phase: "Phase 3", week: "Week 10", category: "useReducer", item: "8.1 Reducer Pattern & useReducer vs useState", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "useReducer", item: "8.2 Dispatch Actions", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "useReducer", item: "8.3 Combining with Context", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "useReducer", item: "PROJECT: Convert useState to useReducer", type: "Project" },
+            { phase: "Phase 3", week: "Week 10", category: "useReducer", item: "PROJECT: Shopping Cart with useReducer", type: "Project" },
+            { phase: "Phase 3", week: "Week 10", category: "Custom Hooks", item: "9.1 Creating Custom Hooks", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "Custom Hooks", item: "9.2 Hook Naming Conventions", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "Custom Hooks", item: "9.3 Reusing Stateful Logic", type: "Topic" },
+            { phase: "Phase 3", week: "Week 10", category: "Custom Hooks", item: "PROJECT: useFetch Hook", type: "Project" },
+            { phase: "Phase 3", week: "Week 10", category: "Custom Hooks", item: "PROJECT: useForm Hook", type: "Project" },
+            { phase: "Phase 3", week: "Week 10", category: "Custom Hooks", item: "PROJECT: useLocalStorage Hook", type: "Project" },
+            { phase: "Phase 3", week: "Week 11", category: "Component Patterns", item: "10.1 Render Props Pattern", type: "Topic" },
+            { phase: "Phase 3", week: "Week 11", category: "Component Patterns", item: "10.2 Higher-Order Components (HOC)", type: "Topic" },
+            { phase: "Phase 3", week: "Week 11", category: "Component Patterns", item: "10.3 Compound Components", type: "Topic" },
+            { phase: "Phase 3", week: "Week 11", category: "Component Patterns", item: "10.4 Controlled vs Uncontrolled", type: "Topic" },
+            { phase: "Phase 3", week: "Week 11", category: "Component Patterns", item: "10.5 Error Boundaries", type: "Topic" },
+            { phase: "Phase 3", week: "Week 11", category: "Component Patterns", item: "PROJECT: Controlled Form Component", type: "Project" },
+            { phase: "Phase 3", week: "Week 11", category: "Component Patterns", item: "PROJECT: Compound Component (Tabs/Accordion)", type: "Project" },
+            { phase: "Phase 3", week: "Week 11", category: "Component Patterns", item: "PROJECT: Error Boundary Implementation", type: "Project" },
+            { phase: "Phase 3", week: "Week 12", category: "Styling", item: "11.1 CSS Modules", type: "Topic" },
+            { phase: "Phase 3", week: "Week 12", category: "Styling", item: "11.2 CSS-in-JS (Styled Components)", type: "Topic" },
+            { phase: "Phase 3", week: "Week 12", category: "Styling", item: "11.3 Utility-First CSS (Tailwind)", type: "Topic" },
+            { phase: "Phase 3", week: "Week 12", category: "Styling", item: "11.4 SASS/SCSS Basics", type: "Topic" },
+            { phase: "Phase 3", week: "Week 12", category: "Styling", item: "PROJECT: Component with CSS Modules", type: "Project" },
+            { phase: "Phase 3", week: "Week 12", category: "Styling", item: "PROJECT: Style with Tailwind CSS", type: "Project" },
+            { phase: "Phase 3", week: "Week 13", category: "Forms", item: "12.1 Controlled Components", type: "Topic" },
+            { phase: "Phase 3", week: "Week 13", category: "Forms", item: "12.2 Form Submission & Validation", type: "Topic" },
+            { phase: "Phase 3", week: "Week 13", category: "Forms", item: "12.3 Form Libraries (React Hook Form)", type: "Topic" },
+            { phase: "Phase 3", week: "Week 13", category: "Forms", item: "PROJECT: Registration Form with Validation", type: "Project" },
+            { phase: "Phase 3", week: "Week 13", category: "Forms", item: "PROJECT: Multi-step Form", type: "Project" },
+            { phase: "Phase 3", week: "Week 14", category: "Routing", item: "13.1 React Router v6 Setup", type: "Topic" },
+            { phase: "Phase 3", week: "Week 14", category: "Routing", item: "13.2 Route Definition & Links", type: "Topic" },
+            { phase: "Phase 3", week: "Week 14", category: "Routing", item: "13.3 Route Parameters & Query Strings", type: "Topic" },
+            { phase: "Phase 3", week: "Week 14", category: "Routing", item: "13.4 Nested Routes & Lazy Loading", type: "Topic" },
+            { phase: "Phase 3", week: "Week 14", category: "Routing", item: "13.5 useNavigate, useParams, useSearchParams", type: "Topic" },
+            { phase: "Phase 3", week: "Week 14", category: "Routing", item: "PROJECT: Multi-page App", type: "Project" },
+            { phase: "Phase 3", week: "Week 14", category: "Routing", item: "PROJECT: Blog with Dynamic Post Pages", type: "Project" },
+            { phase: "Phase 3", week: "Week 14", category: "Routing", item: "PROJECT: Nested Routing (Admin Panel)", type: "Project" },
+            { phase: "Phase 3", week: "Week 14", category: "CAPSTONE", item: "🎯 CAPSTONE: Full React App (Blog/E-Commerce)", type: "Capstone" },
+
+            // Phase 4: Advanced React & State Management (Weeks 15-17)
+            { phase: "Phase 4", week: "Week 15", category: "HTTP Client", item: "1.1 Fetch vs Axios", type: "Topic" },
+            { phase: "Phase 4", week: "Week 15", category: "HTTP Client", item: "1.2 Request Configuration & Interceptors", type: "Topic" },
+            { phase: "Phase 4", week: "Week 15", category: "HTTP Client", item: "1.3 Error Handling Patterns", type: "Topic" },
+            { phase: "Phase 4", week: "Week 15", category: "HTTP Client", item: "1.4 Timeout & Retry Logic", type: "Topic" },
+            { phase: "Phase 4", week: "Week 15", category: "HTTP Client", item: "PROJECT: Weather App with API", type: "Project" },
+            { phase: "Phase 4", week: "Week 15", category: "HTTP Client", item: "PROJECT: Movie Database App", type: "Project" },
+            { phase: "Phase 4", week: "Week 15", category: "React Query", item: "2.1 Installation & Setup", type: "Topic" },
+            { phase: "Phase 4", week: "Week 15", category: "React Query", item: "2.2 useQuery Hook", type: "Topic" },
+            { phase: "Phase 4", week: "Week 15", category: "React Query", item: "2.3 useMutation Hook", type: "Topic" },
+            { phase: "Phase 4", week: "Week 15", category: "React Query", item: "2.4 Query Caching & Refetch", type: "Topic" },
+            { phase: "Phase 4", week: "Week 15", category: "React Query", item: "PROJECT: Migrate Fetch to React Query", type: "Project" },
+            { phase: "Phase 4", week: "Week 15", category: "React Query", item: "PROJECT: Todo App with Mutations", type: "Project" },
+            { phase: "Phase 4", week: "Week 15", category: "React Query", item: "PROJECT: Infinite Scroll Implementation", type: "Project" },
+            { phase: "Phase 4", week: "Week 16-17", category: "Redux Toolkit", item: "3.1 Redux Concepts (Store, Slices, Actions)", type: "Topic" },
+            { phase: "Phase 4", week: "Week 16-17", category: "Redux Toolkit", item: "3.2 useSelector & useDispatch Hooks", type: "Topic" },
+            { phase: "Phase 4", week: "Week 16-17", category: "Redux Toolkit", item: "3.3 Async Thunks for API Calls", type: "Topic" },
+            { phase: "Phase 4", week: "Week 16-17", category: "Redux Toolkit", item: "3.4 Redux DevTools Integration", type: "Topic" },
+            { phase: "Phase 4", week: "Week 16-17", category: "Redux Toolkit", item: "PROJECT: Convert Context App to Redux", type: "Project" },
+            { phase: "Phase 4", week: "Week 16-17", category: "Redux Toolkit", item: "PROJECT: Shopping Cart with Redux", type: "Project" },
+            { phase: "Phase 4", week: "Week 16-17", category: "Redux Toolkit", item: "PROJECT: User Authentication with Redux", type: "Project" },
+            { phase: "Phase 4", week: "Week 17", category: "CAPSTONE", item: "🎯 CAPSTONE: Complex React App with Redux & React Query", type: "Capstone" },
+
+            // Phase 5: Backend Development (Weeks 18-23)
+            { phase: "Phase 5", week: "Week 18", category: "Node.js Fundamentals", item: "1.1 Node.js Installation & npm", type: "Topic" },
+            { phase: "Phase 5", week: "Week 18", category: "Node.js Fundamentals", item: "1.2 Node Modules System", type: "Topic" },
+            { phase: "Phase 5", week: "Week 18", category: "Node.js Fundamentals", item: "1.3 Event Loop in Node", type: "Topic" },
+            { phase: "Phase 5", week: "Week 18", category: "Node.js Fundamentals", item: "1.4 File System Basics", type: "Topic" },
+            { phase: "Phase 5", week: "Week 18", category: "Express.js", item: "2.1 Creating Express App", type: "Topic" },
+            { phase: "Phase 5", week: "Week 18", category: "Express.js", item: "2.2 Middleware Concept", type: "Topic" },
+            { phase: "Phase 5", week: "Week 18", category: "Express.js", item: "2.3 Route Handling & HTTP Methods", type: "Topic" },
+            { phase: "Phase 5", week: "Week 18", category: "Express.js", item: "2.4 Response Types (JSON, HTML)", type: "Topic" },
+            { phase: "Phase 5", week: "Week 18", category: "Express.js", item: "PROJECT: Simple API Server", type: "Project" },
+            { phase: "Phase 5", week: "Week 18", category: "Express.js", item: "PROJECT: Todo API Endpoints", type: "Project" },
+            { phase: "Phase 5", week: "Week 19", category: "Database Fundamentals", item: "3.1 SQL Basics (SELECT, WHERE, JOIN)", type: "Topic" },
+            { phase: "Phase 5", week: "Week 19", category: "Database Fundamentals", item: "3.2 Tables & Relationships", type: "Topic" },
+            { phase: "Phase 5", week: "Week 19", category: "Database Fundamentals", item: "3.3 Primary Keys & Foreign Keys", type: "Topic" },
+            { phase: "Phase 5", week: "Week 19", category: "Database Fundamentals", item: "3.4 Database Normalization", type: "Topic" },
+            { phase: "Phase 5", week: "Week 19", category: "PostgreSQL", item: "4.1 PostgreSQL Installation", type: "Topic" },
+            { phase: "Phase 5", week: "Week 19", category: "PostgreSQL", item: "4.2 Database & Table Creation", type: "Topic" },
+            { phase: "Phase 5", week: "Week 19", category: "PostgreSQL", item: "4.3 psql Command Line", type: "Topic" },
+            { phase: "Phase 5", week: "Week 19", category: "PostgreSQL", item: "PROJECT: Design Database Schema", type: "Project" },
+            { phase: "Phase 5", week: "Week 20", category: "Prisma ORM", item: "5.1 Prisma Setup & Schema Definition", type: "Topic" },
+            { phase: "Phase 5", week: "Week 20", category: "Prisma ORM", item: "5.2 Migrations", type: "Topic" },
+            { phase: "Phase 5", week: "Week 20", category: "Prisma ORM", item: "5.3 CRUD Operations", type: "Topic" },
+            { phase: "Phase 5", week: "Week 20", category: "Prisma ORM", item: "5.4 Relationships (One-to-Many, Many-to-Many)", type: "Topic" },
+            { phase: "Phase 5", week: "Week 20", category: "Prisma ORM", item: "PROJECT: Create Schema with Relationships", type: "Project" },
+            { phase: "Phase 5", week: "Week 20", category: "Prisma ORM", item: "PROJECT: Build CRUD Endpoints", type: "Project" },
+            { phase: "Phase 5", week: "Week 21", category: "Authentication", item: "6.1 Password Hashing (bcrypt)", type: "Topic" },
+            { phase: "Phase 5", week: "Week 21", category: "Authentication", item: "6.2 JWT Tokens & Refresh Tokens", type: "Topic" },
+            { phase: "Phase 5", week: "Week 21", category: "Authentication", item: "6.3 Session Management", type: "Topic" },
+            { phase: "Phase 5", week: "Week 21", category: "Authentication", item: "6.4 Authorization (Roles & Permissions)", type: "Topic" },
+            { phase: "Phase 5", week: "Week 21", category: "Authentication", item: "PROJECT: Login/Signup Endpoints", type: "Project" },
+            { phase: "Phase 5", week: "Week 21", category: "Authentication", item: "PROJECT: JWT Authentication Implementation", type: "Project" },
+            { phase: "Phase 5", week: "Week 21", category: "Authentication", item: "PROJECT: Protected Routes", type: "Project" },
+            { phase: "Phase 5", week: "Week 21", category: "Security", item: "7.1 Input Validation", type: "Topic" },
+            { phase: "Phase 5", week: "Week 21", category: "Security", item: "7.2 SQL Injection Prevention", type: "Topic" },
+            { phase: "Phase 5", week: "Week 21", category: "Security", item: "7.3 XSS Prevention & CORS", type: "Topic" },
+            { phase: "Phase 5", week: "Week 21", category: "Security", item: "7.4 Rate Limiting & Environment Variables", type: "Topic" },
+            { phase: "Phase 5", week: "Week 22-23", category: "REST API Design", item: "8.1 Resource-Oriented URLs", type: "Topic" },
+            { phase: "Phase 5", week: "Week 22-23", category: "REST API Design", item: "8.2 Status Codes & Error Handling", type: "Topic" },
+            { phase: "Phase 5", week: "Week 22-23", category: "REST API Design", item: "8.3 Pagination, Filtering, Sorting", type: "Topic" },
+            { phase: "Phase 5", week: "Week 22-23", category: "REST API Design", item: "8.4 API Versioning", type: "Topic" },
+            { phase: "Phase 5", week: "Week 22-23", category: "REST API Design", item: "PROJECT: Design Complete REST API", type: "Project" },
+            { phase: "Phase 5", week: "Week 22-23", category: "REST API Design", item: "PROJECT: API Documentation (Swagger)", type: "Project" },
+            { phase: "Phase 5", week: "Week 22-23", category: "Testing Backend", item: "9.1 Unit Testing with Jest", type: "Topic" },
+            { phase: "Phase 5", week: "Week 22-23", category: "Testing Backend", item: "9.2 Integration Testing", type: "Topic" },
+            { phase: "Phase 5", week: "Week 22-23", category: "Testing Backend", item: "9.3 Mocking Database Calls", type: "Topic" },
+            { phase: "Phase 5", week: "Week 22-23", category: "Testing Backend", item: "PROJECT: Write Tests for Endpoints", type: "Project" },
+            { phase: "Phase 5", week: "Week 23", category: "CAPSTONE", item: "🎯 CAPSTONE: Complete Backend API with Auth & Tests", type: "Capstone" },
+
+            // Phase 6: Full-Stack Integration (Weeks 24-26)
+            { phase: "Phase 6", week: "Week 24", category: "Integration Setup", item: "1.1 Connect React Frontend to Express Backend", type: "Topic" },
+            { phase: "Phase 6", week: "Week 24", category: "Integration Setup", item: "1.2 Proxy Configuration", type: "Topic" },
+            { phase: "Phase 6", week: "Week 24", category: "Integration Setup", item: "1.3 Environment Variables (.env)", type: "Topic" },
+            { phase: "Phase 6", week: "Week 24", category: "Integration Setup", item: "1.4 CORS Configuration", type: "Topic" },
+            { phase: "Phase 6", week: "Week 24", category: "Authentication Flow", item: "2.1 Login/Signup UI Integration", type: "Topic" },
+            { phase: "Phase 6", week: "Week 24", category: "Authentication Flow", item: "2.2 JWT Storage (LocalStorage vs Cookies)", type: "Topic" },
+            { phase: "Phase 6", week: "Week 24", category: "Authentication Flow", item: "2.3 Protected Routes on Frontend", type: "Topic" },
+            { phase: "Phase 6", week: "Week 24", category: "Authentication Flow", item: "2.4 Auth State Management", type: "Topic" },
+            { phase: "Phase 6", week: "Week 25", category: "Complex Features", item: "3.1 Multi-Resource CRUD Operations", type: "Topic" },
+            { phase: "Phase 6", week: "Week 25", category: "Complex Features", item: "3.2 File Upload & Image Handling", type: "Topic" },
+            { phase: "Phase 6", week: "Week 25", category: "Complex Features", item: "3.3 Search & Filter Functionality", type: "Topic" },
+            { phase: "Phase 6", week: "Week 25", category: "Complex Features", item: "3.4 Real-time Updates (Optional: WebSockets)", type: "Topic" },
+            { phase: "Phase 6", week: "Week 26", category: "Error Handling", item: "4.1 Global Error Handling", type: "Topic" },
+            { phase: "Phase 6", week: "Week 26", category: "Error Handling", item: "4.2 Loading States & UX", type: "Topic" },
+            { phase: "Phase 6", week: "Week 26", category: "Error Handling", item: "4.3 Form Validation (Client & Server)", type: "Topic" },
+            { phase: "Phase 6", week: "Week 26", category: "CAPSTONE", item: "🎯 CAPSTONE: Complete Full-Stack App (E-Commerce/Social)", type: "Capstone" },
+
+            // Phase 7: Advanced Topics & Deployment (Weeks 27-30)
+            { phase: "Phase 7", week: "Week 27", category: "TypeScript", item: "1.1 TypeScript Setup & Basic Types", type: "Topic" },
+            { phase: "Phase 7", week: "Week 27", category: "TypeScript", item: "1.2 Interfaces & Type Aliases", type: "Topic" },
+            { phase: "Phase 7", week: "Week 27", category: "TypeScript", item: "1.3 Generics", type: "Topic" },
+            { phase: "Phase 7", week: "Week 27", category: "TypeScript", item: "1.4 Utility Types", type: "Topic" },
+            { phase: "Phase 7", week: "Week 27", category: "TypeScript", item: "PROJECT: Convert JS Project to TypeScript", type: "Project" },
+            { phase: "Phase 7", week: "Week 27", category: "Testing", item: "2.1 Unit Tests with Jest", type: "Topic" },
+            { phase: "Phase 7", week: "Week 27", category: "Testing", item: "2.2 React Testing Library", type: "Topic" },
+            { phase: "Phase 7", week: "Week 27", category: "Testing", item: "2.3 Integration Tests", type: "Topic" },
+            { phase: "Phase 7", week: "Week 27", category: "Testing", item: "2.4 E2E Tests (Playwright/Cypress)", type: "Topic" },
+            { phase: "Phase 7", week: "Week 27", category: "Testing", item: "PROJECT: Write Test Suite for Capstone", type: "Project" },
+            { phase: "Phase 7", week: "Week 28", category: "CI/CD", item: "3.1 GitHub Actions Setup", type: "Topic" },
+            { phase: "Phase 7", week: "Week 28", category: "CI/CD", item: "3.2 Automated Testing Pipeline", type: "Topic" },
+            { phase: "Phase 7", week: "Week 28", category: "CI/CD", item: "3.3 Deployment Pipelines", type: "Topic" },
+            { phase: "Phase 7", week: "Week 28", category: "CI/CD", item: "PROJECT: Setup CI/CD for Capstone", type: "Project" },
+            { phase: "Phase 7", week: "Week 29", category: "Deployment", item: "4.1 Frontend Deployment (Vercel/Netlify)", type: "Topic" },
+            { phase: "Phase 7", week: "Week 29", category: "Deployment", item: "4.2 Backend Deployment (Railway/Render)", type: "Topic" },
+            { phase: "Phase 7", week: "Week 29", category: "Deployment", item: "4.3 Database Deployment (Managed PostgreSQL)", type: "Topic" },
+            { phase: "Phase 7", week: "Week 29", category: "Deployment", item: "4.4 Environment Variables in Production", type: "Topic" },
+            { phase: "Phase 7", week: "Week 29", category: "Deployment", item: "PROJECT: Deploy Full-Stack App", type: "Project" },
+            { phase: "Phase 7", week: "Week 30", category: "Performance", item: "5.1 Code Splitting & Lazy Loading", type: "Topic" },
+            { phase: "Phase 7", week: "Week 30", category: "Performance", item: "5.2 Caching Strategies", type: "Topic" },
+            { phase: "Phase 7", week: "Week 30", category: "Performance", item: "5.3 Database Indexing", type: "Topic" },
+            { phase: "Phase 7", week: "Week 30", category: "Performance", item: "5.4 Lighthouse Optimization", type: "Topic" },
+            { phase: "Phase 7", week: "Week 30", category: "Performance", item: "PROJECT: Optimize Capstone Performance", type: "Project" },
+            { phase: "Phase 7", week: "Week 30", category: "Portfolio", item: "6.1 Portfolio Website Creation", type: "Topic" },
+            { phase: "Phase 7", week: "Week 30", category: "Portfolio", item: "6.2 Resume & LinkedIn Optimization", type: "Topic" },
+            { phase: "Phase 7", week: "Week 30", category: "Portfolio", item: "6.3 GitHub Profile Enhancement", type: "Topic" },
+            { phase: "Phase 7", week: "Week 30", category: "Portfolio", item: "PROJECT: Build Professional Portfolio", type: "Project" },
+            { phase: "Phase 7", week: "Week 30", category: "FINAL", item: "🎯 FINAL: Deploy All Capstones & Portfolio", type: "Capstone" }
+        ];
+
+        // Application state
+        let roadmapItems = [];
+        let filteredItems = [];
+        let progressChart = null;
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('fullstack-roadmap-progress');
+            if (savedProgress) {
+                return JSON.parse(savedProgress);
+            }
+            return {};
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const progress = {};
+            roadmapItems.forEach(item => {
+                if (item.completed) {
+                    progress[item.id] = {
+                        completed: true,
+                        date: item.dateCompleted || new Date().toISOString().split('T')[0]
+                    };
+                }
+            });
+            
+            localStorage.setItem('fullstack-roadmap-progress', JSON.stringify(progress));
+            
+            // Save notes
+            const notes = document.getElementById('study-notes').value;
+            localStorage.setItem('fullstack-roadmap-notes', notes);
+        }
+
+        // Initialize the app
+        function init() {
+            // Initialize roadmap items with IDs
+            roadmapItems = roadmapData.map((item, index) => ({
+                id: `item-${index}`,
+                phase: item.phase,
+                week: item.week,
+                category: item.category,
+                item: item.item,
+                type: item.type,
+                completed: false,
+                status: 'Not Started',
+                notes: '',
+                githubLink: '',
+                dateCompleted: ''
+            }));
+            
+            // Load saved progress
+            const savedProgress = loadProgress();
+            Object.keys(savedProgress).forEach(id => {
+                const item = roadmapItems.find(item => item.id === id);
+                if (item) {
+                    item.completed = true;
+                    item.status = 'Completed';
+                    if (savedProgress[id].date) {
+                        item.dateCompleted = savedProgress[id].date;
+                    }
+                }
+            });
+            
+            // Load saved notes
+            const savedNotes = localStorage.getItem('fullstack-roadmap-notes');
+            if (savedNotes) {
+                document.getElementById('study-notes').value = savedNotes;
+            }
+            
+            // Initialize filtered items
+            filteredItems = [...roadmapItems];
+            
+            // Render the roadmap
+            renderRoadmap();
+            
+            // Update stats
+            updateStats();
+            
+            // Initialize chart
+            initProgressChart();
+            
+            // Setup event listeners
+            setupEventListeners();
+        }
+
+        // Render the roadmap
+        function renderRoadmap() {
+            const roadmapBody = document.getElementById('roadmap-body');
+            
+            // Group items by phase
+            const phases = {};
+            filteredItems.forEach(item => {
+                if (!phases[item.phase]) {
+                    phases[item.phase] = [];
+                }
+                phases[item.phase].push(item);
+            });
+            
+            // Clear current content
+            roadmapBody.innerHTML = '';
+            
+            // If no items match the filter
+            if (filteredItems.length === 0) {
+                roadmapBody.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No items found</h3>
+                        <p>Try changing your filters or search term</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Create phase sections
+            Object.keys(phases).sort().forEach(phaseName => {
+                const phaseItems = phases[phaseName];
+                
+                // Calculate phase progress
+                const completedCount = phaseItems.filter(item => item.completed).length;
+                const progressPercent = phaseItems.length > 0 ? Math.round((completedCount / phaseItems.length) * 100) : 0;
+                
+                // Group items by week
+                const weeks = {};
+                phaseItems.forEach(item => {
+                    if (!weeks[item.week]) {
+                        weeks[item.week] = [];
+                    }
+                    weeks[item.week].push(item);
+                });
+                
+                // Create phase HTML
+                const phaseElement = document.createElement('div');
+                phaseElement.className = 'phase';
+                phaseElement.innerHTML = `
+                    <div class="phase-header" data-phase="${phaseName}">
+                        <div class="phase-title">
+                            <span class="phase-badge">${phaseName}</span>
+                            <span>${getPhaseDescription(phaseName)}</span>
+                        </div>
+                        <div class="phase-stats">
+                            <span>${completedCount}/${phaseItems.length} completed</span>
+                            <div class="phase-progress">
+                                <div class="phase-progress-fill" style="width: ${progressPercent}%"></div>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="phase-content">
+                        ${Object.keys(weeks).sort((a, b) => {
+                            // Sort weeks numerically
+                            const weekA = extractWeekNumber(a);
+                            const weekB = extractWeekNumber(b);
+                            return weekA - weekB;
+                        }).map(week => `
+                            <div class="week">
+                                <div class="week-header">${week}</div>
+                                <div class="items-list">
+                                    ${weeks[week].map(item => renderItem(item)).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                roadmapBody.appendChild(phaseElement);
+            });
+            
+            // Add click listeners to phase headers
+            document.querySelectorAll('.phase-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector('.fa-chevron-down');
+                    
+                    content.classList.toggle('expanded');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+            
+            // Expand first phase by default
+            const firstPhase = document.querySelector('.phase-header');
+            if (firstPhase) {
+                firstPhase.click();
+            }
+            
+            // Update visible items count
+            document.getElementById('visible-items').textContent = filteredItems.length;
+        }
+
+        // Helper function to extract week number for sorting
+        function extractWeekNumber(weekStr) {
+            const match = weekStr.match(/\d+/);
+            return match ? parseInt(match[0]) : 0;
+        }
+
+        // Get phase description
+        function getPhaseDescription(phaseName) {
+            const descriptions = {
+                'Phase 1': 'JavaScript Fundamentals (Weeks 1-4)',
+                'Phase 2': 'Git & Version Control (Weeks 5-6)',
+                'Phase 3': 'React.js (Weeks 7-14)',
+                'Phase 4': 'Advanced React & State Management (Weeks 15-17)',
+                'Phase 5': 'Backend Development (Weeks 18-23)',
+                'Phase 6': 'Full-Stack Integration (Weeks 24-26)',
+                'Phase 7': 'Advanced Topics & Deployment (Weeks 27-30)'
+            };
+            
+            return descriptions[phaseName] || '';
+        }
+
+        // Render a single item
+        function renderItem(item) {
+            const typeClass = `type-${item.type.toLowerCase()}`;
+            
+            return `
+                <div class="item ${item.completed ? 'item-completed' : ''}" data-id="${item.id}">
+                    <div class="item-checkbox">
+                        <input type="checkbox" ${item.completed ? 'checked' : ''}>
+                    </div>
+                    <div class="item-info">
+                        <div class="item-title">${item.item}</div>
+                        <div class="item-meta">
+                            <span>${item.category}</span>
+                            <span class="item-type ${typeClass}">${item.type}</span>
+                            ${item.dateCompleted ? `<span><i class="far fa-calendar-check"></i> ${item.dateCompleted}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-outline btn-small add-note"><i class="far fa-sticky-note"></i> Note</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Update statistics
+        function updateStats() {
+            const totalItems = roadmapItems.length;
+            const completedItems = roadmapItems.filter(item => item.completed).length;
+            const completionRate = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+            
+            // Calculate remaining weeks (assuming 30 weeks total)
+            const completedWeeks = new Set(roadmapItems
+                .filter(item => item.completed)
+                .map(item => item.week)
+            ).size;
+            
+            const remainingWeeks = 30 - completedWeeks;
+            
+            document.getElementById('total-items').textContent = totalItems;
+            document.getElementById('completed-items').textContent = completedItems;
+            document.getElementById('completion-rate').textContent = `${completionRate}%`;
+            document.getElementById('remaining-weeks').textContent = remainingWeeks;
+            
+            // Update progress chart
+            updateProgressChart();
+        }
+
+        // Initialize progress chart
+        function initProgressChart() {
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            
+            progressChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Completed', 'In Progress', 'Not Started'],
+                    datasets: [{
+                        data: [0, 0, roadmapItems.length],
+                        backgroundColor: [
+                            '#2ecc71',
+                            '#f39c12',
+                            '#e74c3c'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            updateProgressChart();
+        }
+
+        // Update progress chart data
+        function updateProgressChart() {
+            if (!progressChart) return;
+            
+            const completedItems = roadmapItems.filter(item => item.completed).length;
+            const inProgressItems = roadmapItems.filter(item => item.status === 'In Progress').length;
+            const notStartedItems = roadmapItems.length - completedItems - inProgressItems;
+            
+            progressChart.data.datasets[0].data = [completedItems, inProgressItems, notStartedItems];
+            progressChart.update();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Filter by phase
+            document.getElementById('phase-filter').addEventListener('change', applyFilters);
+            
+            // Filter by type
+            document.getElementById('type-filter').addEventListener('change', applyFilters);
+            
+            // Search
+            document.getElementById('search').addEventListener('input', applyFilters);
+            
+            // Mark all as complete
+            document.getElementById('mark-all-complete').addEventListener('click', () => {
+                roadmapItems.forEach(item => {
+                    item.completed = true;
+                    item.status = 'Completed';
+                    item.dateCompleted = new Date().toISOString().split('T')[0];
+                });
+                applyFilters();
+                saveProgress();
+            });
+            
+            // Mark all as incomplete
+            document.getElementById('mark-all-incomplete').addEventListener('click', () => {
+                roadmapItems.forEach(item => {
+                    item.completed = false;
+                    item.status = 'Not Started';
+                    item.dateCompleted = '';
+                });
+                applyFilters();
+                saveProgress();
+            });
+            
+            // Export progress
+            document.getElementById('export-progress').addEventListener('click', exportProgress);
+            
+            // Save notes
+            document.getElementById('save-notes').addEventListener('click', () => {
+                saveProgress();
+                alert('Notes saved!');
+            });
+            
+            // Use event delegation for dynamic elements
+            document.addEventListener('click', function(e) {
+                // Checkbox toggle
+                if (e.target.type === 'checkbox' && e.target.closest('.item-checkbox')) {
+                    const itemElement = e.target.closest('.item');
+                    const itemId = itemElement.dataset.id;
+                    const item = roadmapItems.find(item => item.id === itemId);
+                    
+                    if (item) {
+                        item.completed = e.target.checked;
+                        item.status = e.target.checked ? 'Completed' : 'Not Started';
+                        item.dateCompleted = e.target.checked ? new Date().toISOString().split('T')[0] : '';
+                        
+                        // Update UI
+                        itemElement.classList.toggle('item-completed');
+                        
+                        // Update stats
+                        updateStats();
+                        saveProgress();
+                        
+                        // Update phase progress
+                        updatePhaseProgress(item.phase);
+                    }
+                }
+                
+                // Add note
+                if (e.target.closest('.add-note')) {
+                    const itemElement = e.target.closest('.item');
+                    const itemId = itemElement.dataset.id;
+                    const item = roadmapItems.find(item => item.id === itemId);
+                    
+                    if (item) {
+                        const note = prompt(`Add a note for "${item.item}":`, item.notes || '');
+                        if (note !== null) {
+                            item.notes = note;
+                            saveProgress();
+                            alert('Note saved!');
+                        }
+                    }
+                }
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const phaseFilter = document.getElementById('phase-filter').value;
+            const typeFilter = document.getElementById('type-filter').value;
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            
+            filteredItems = roadmapItems.filter(item => {
+                // Phase filter
+                if (phaseFilter !== 'all' && item.phase !== phaseFilter) {
+                    return false;
+                }
+                
+                // Type filter
+                if (typeFilter !== 'all' && item.type !== typeFilter) {
+                    return false;
+                }
+                
+                // Search filter
+                if (searchTerm && !item.item.toLowerCase().includes(searchTerm) && 
+                    !item.category.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            renderRoadmap();
+        }
+
+        // Update phase progress
+        function updatePhaseProgress(phaseName) {
+            const phaseElement = document.querySelector(`.phase-header[data-phase="${phaseName}"]`);
+            if (!phaseElement) return;
+            
+            const phaseItems = roadmapItems.filter(item => item.phase === phaseName);
+            const completedCount = phaseItems.filter(item => item.completed).length;
+            const progressPercent = phaseItems.length > 0 ? Math.round((completedCount / phaseItems.length) * 100) : 0;
+            
+            const phaseStats = phaseElement.querySelector('.phase-stats');
+            if (phaseStats) {
+                const countSpan = phaseStats.querySelector('span');
+                if (countSpan) {
+                    countSpan.textContent = `${completedCount}/${phaseItems.length} completed`;
+                }
+                
+                const progressFill = phaseStats.querySelector('.phase-progress-fill');
+                if (progressFill) {
+                    progressFill.style.width = `${progressPercent}%`;
+                }
+            }
+        }
+
+        // Export progress
+        function exportProgress() {
+            const completedItems = roadmapItems.filter(item => item.completed);
+            
+            let csvContent = "Phase,Week,Category,Item,Type,Completed,Status,Date Completed,Notes\n";
+            
+            completedItems.forEach(item => {
+                const row = [
+                    item.phase,
+                    item.week,
+                    item.category,
+                    `"${item.item}"`,
+                    item.type,
+                    item.completed ? 'TRUE' : 'FALSE',
+                    item.status,
+                    item.dateCompleted,
+                    `"${item.notes || ''}"`
+                ];
+                csvContent += row.join(',') + '\n';
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fullstack-roadmap-progress.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
